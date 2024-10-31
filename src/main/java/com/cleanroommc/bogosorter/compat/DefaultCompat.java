@@ -11,6 +11,7 @@ import com.cleanroommc.bogosorter.ShortcutHandler;
 import com.cleanroommc.bogosorter.api.IBogoSortAPI;
 import com.cleanroommc.bogosorter.api.IPosSetter;
 import com.cleanroommc.bogosorter.api.ISlot;
+import com.cleanroommc.bogosorter.compat.data_driven.DataDrivenBogoCompat;
 import com.cleanroommc.bogosorter.compat.gtce.IModularSortable;
 import com.cleanroommc.bogosorter.compat.gtce.SortableSlotWidget;
 import com.cleanroommc.bogosorter.core.mixin.colossalchests.ContainerColossalChestAccessor;
@@ -348,18 +349,6 @@ public class DefaultCompat {
             });
         }
 
-        if (Loader.isModLoaded("energycontrol")) {
-            api.addCompat(ContainerCardHolder.class, (container, builder) -> {
-                builder.addSlotGroup(0, 54, 9);
-            });
-        }
-
-        if (Loader.isModLoaded("projectred-exploration")) {
-            api.addCompat(mrtjp.projectred.exploration.ContainerBackpack.class, (container, builder) -> {
-                builder.addSlotGroup(0, 27, 9);
-            });
-        }
-
         if (Loader.isModLoaded("thebetweenlands")) {
             api.addCompat(ContainerPouch.class, (container, builder) -> {
                 IInventory inventory = container.getItemInventory();
@@ -420,18 +409,6 @@ public class DefaultCompat {
             });
         }
 
-        if (BogoSorter.isExpandableInventoryLoaded()) {
-            // mark as sortable
-            api.addCompat(ContainerExpandedInventory.class, (container, builder) -> {
-            });
-        }
-
-        if (Loader.isModLoaded("charm")) {
-            api.addCompat(svenhjol.charm.crafting.container.ContainerBarrel.class, (container, builder) -> {
-                builder.addSlotGroup(0, 27, 9);
-            });
-        }
-
         if (Loader.isModLoaded("industrialrenewal")) {
             api.addCompat(ContainerStorageChest.class, (container, builder) -> {
                 builder.addGenericSlotGroup().buttonPosSetter((slotGroup, buttonPos) -> {
@@ -451,18 +428,7 @@ public class DefaultCompat {
             });
         }
 
-        if (Loader.isModLoaded("cookingforblockheads")) {
-            api.addGenericCompat(ContainerCounter.class);
-            api.addGenericCompat(ContainerFridge.class);
-        }
-
-        if (Loader.isModLoaded("mekanism")) {
-            api.addGenericCompat(mekanism.common.inventory.container.ContainerPersonalChest.class);
-        }
-
-        if (Loader.isModLoaded("conarm")) {
-            api.addGenericCompat(ContainerKnapsack.class);
-        }
+        DataDrivenBogoCompat.handle(api);
     }
 
     private static ISlot avaritiaddons$findSlot(List<ISlot> slots, ItemStack itemStack, boolean emptyOnly) {
